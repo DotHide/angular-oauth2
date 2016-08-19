@@ -19,7 +19,7 @@ module.exports = function(config) {
       'node_modules/query-string/query-string.js',
       'node_modules/lodash/lodash.js',
       'node_modules/angular-mocks/angular-mocks.js',
-      'dist/angular-oauth2.js',
+      'dist/ng-oauth-localforage.js',
       'test/mocks/**/*.mock.js',
       'test/unit/**/*.spec.js'
     ],

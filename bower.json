@@ -1,8 +1,8 @@
 {
-  "name": "angular-oauth2",
-  "version": "4.1.0",
+  "name": "ng-oauth-localforage",
+  "version": "0.1.0",
   "description": "Angular OAuth using LocalForage",
-  "main": "dist/angular-oauth2.js",
+  "main": "dist/ng-oauth-localforage.js",
   "authors": [
     "Martin <dothide@gmail.com>"
   ],
@@ -13,7 +13,7 @@
     "LocalForage"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/DotHide/angular-oauth2",
+  "homepage": "https://github.com/DotHide/ng-oauth-localforage",
   "ignore": [
     "**/.*",
     "bower_components",

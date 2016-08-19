@@ -1,7 +1,7 @@
 /**
  * ng-oauth-localforage - Angular OAuth using LocalForage
- * @version v4.1.0
- * @link https://github.com/DotHide/angular-oauth2
+ * @version v0.1.0
+ * @link https://github.com/DotHide/ng-oauth-localforage
  * @license MIT
  */
 (function(root, factory) {
@@ -10,14 +10,10 @@
     } else if (typeof exports === "object") {
         module.exports = factory(require("angular"), require("angular-localforage"));
     } else {
-        root.angularOAuth2 = factory(root.angular, "LocalForageModule");
+        root.ngOAuthLocalforage = factory(root.angular, "LocalForageModule");
     }
 })(this, function(angular, LocalForageModule) {
-    var ngModule = angular.module("angular-oauth2", [ LocalForageModule ]).config(oauthConfig).factory("oauthInterceptor", oauthInterceptor).provider("OAuth", OAuthProvider).provider("OAuthToken", OAuthTokenProvider);
-    function oauthConfig($httpProvider) {
-        $httpProvider.interceptors.push("oauthInterceptor");
-    }
-    oauthConfig.$inject = [ "$httpProvider" ];
+    var ngModule = angular.module("ng-oauth-localforage", [ LocalForageModule ]).config(oauthConfig).factory("oauthInterceptor", oauthInterceptor).provider("OAuth", OAuthProvider).provider("OAuthToken", OAuthTokenProvider);
     function oauthInterceptor($q, $rootScope, OAuthToken) {
         return {
             request: function request(config) {
@@ -43,6 +39,10 @@
         };
     }
     oauthInterceptor.$inject = [ "$q", "$rootScope", "OAuthToken" ];
+    function oauthConfig($httpProvider) {
+        $httpProvider.interceptors.push("oauthInterceptor");
+    }
+    oauthConfig.$inject = [ "$httpProvider" ];
     var _createClass = function() {
         function defineProperties(target, props) {
             for (var i = 0; i < props.length; i++) {

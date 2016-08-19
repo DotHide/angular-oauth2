@@ -12,7 +12,7 @@ describe('OAuthTokenProvider', function() {
           provider = OAuthTokenProvider;
         });
 
-      angular.mock.module('angular-oauth2', 'angular-oauth2.test');
+      angular.mock.module('ng-oauth-localforage', 'angular-oauth2.test');
 
       angular.mock.inject(function() {});
     });
@@ -39,7 +39,7 @@ describe('OAuthTokenProvider', function() {
           });
         });
 
-      angular.mock.module('angular-oauth2', 'angular-oauth2.test');
+      angular.mock.module('ng-oauth-localforage', 'angular-oauth2.test');
 
       angular.mock.inject(function(OAuthToken) {
         OAuthToken.setToken({

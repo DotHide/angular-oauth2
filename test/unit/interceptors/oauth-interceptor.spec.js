@@ -4,7 +4,7 @@
 
 describe('oauthInterceptor', function() {
   beforeEach(function() {
-    angular.mock.module('angular-oauth2', 'angular-localforage.mock');
+    angular.mock.module('ng-oauth-localforage', 'angular-localforage.mock');
   });
 
   afterEach(inject(function(OAuthToken) {

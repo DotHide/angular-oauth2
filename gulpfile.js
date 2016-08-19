@@ -19,12 +19,12 @@ var wrapUmd = require('gulp-wrap-umd');
  */
 
 var config = {
-  name: 'angular-oauth2.js',
-  entry: './src/angular-oauth2.js',
+  name: 'ng-oauth-localforage.js',
+  entry: './src/ng-oauth-localforage.js',
   src: ['./src/*.js', './src/**/*.js'],
   dest: './dist',
   umd: {
-    namespace: 'angularOAuth2',
+    namespace: 'ngOAuthLocalforage',
     exports: 'ngModule',
     template: `
       (function(root, factory) {

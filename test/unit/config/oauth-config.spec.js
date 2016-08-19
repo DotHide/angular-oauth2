@@ -12,7 +12,7 @@ describe('oauthConfig', function() {
         httpProvider = $httpProvider;
       });
 
-    angular.mock.module('angular-oauth2', 'angular-oauth2.test');
+    angular.mock.module('ng-oauth-localforage', 'angular-oauth2.test');
 
     angular.mock.inject(function() {
       httpProvider.interceptors.should.containEql('oauthInterceptor');
