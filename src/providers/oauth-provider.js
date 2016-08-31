@@ -116,8 +116,7 @@ function OAuthProvider() {
         var response;
         data = angular.extend({
           client_id: config.clientId,
-          redirect_uri: config.redirect_uri,
-          grant_type: 'authorization_code'
+          grant_type: 'password'
         }, data);
 
         if (null !== config.clientSecret) {
