@@ -8,7 +8,8 @@ describe('OAuthProvider', function() {
     clientId: 'CLIENT_ID',
     grantPath: '/oauth2/token',
     revokePath: '/oauth2/revoke',
-    clientSecret: 'CLIENT_SECRET'
+    clientSecret: 'CLIENT_SECRET',
+    redirect_uri: 'urn:ietf:wg:oauth:2.0:oob'
   };
 
   describe('configure()', function() {
@@ -167,10 +168,11 @@ describe('OAuthProvider', function() {
     describe('getAccessToken()', function() {
       var data = queryString.stringify({
         client_id: defaults.clientId,
-        grant_type: 'password',
+        client_secret: defaults.clientSecret,
+        grant_type: 'authorization_code',
         username: 'foo',
         password: 'bar',
-        client_secret: defaults.clientSecret
+        redirect_uri: defaults.redirect_uri
       });
 
       it('should call `queryString.stringify`', inject(function(OAuth) {
@@ -185,10 +187,11 @@ describe('OAuthProvider', function() {
         queryString.stringify.firstCall.args.should.have.lengthOf(1);
         queryString.stringify.firstCall.args[0].should.eql({
           client_id: defaults.clientId,
-          grant_type: 'password',
+          client_secret: defaults.clientSecret,
+          grant_type: 'authorization_code',
           username: 'foo',
           password: 'bar',
-          client_secret: defaults.clientSecret
+          redirect_uri: defaults.redirect_uri
         });
         queryString.stringify.restore();
       }));

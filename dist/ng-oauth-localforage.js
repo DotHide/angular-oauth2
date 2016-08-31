@@ -14,6 +14,10 @@
     }
 })(this, function(angular, LocalForageModule) {
     var ngModule = angular.module("ng-oauth-localforage", [ LocalForageModule ]).config(oauthConfig).factory("oauthInterceptor", oauthInterceptor).provider("OAuth", OAuthProvider).provider("OAuthToken", OAuthTokenProvider);
+    function oauthConfig($httpProvider) {
+        $httpProvider.interceptors.push("oauthInterceptor");
+    }
+    oauthConfig.$inject = [ "$httpProvider" ];
     function oauthInterceptor($q, $rootScope, OAuthToken) {
         return {
             request: function request(config) {
@@ -39,10 +43,6 @@
         };
     }
     oauthInterceptor.$inject = [ "$q", "$rootScope", "OAuthToken" ];
-    function oauthConfig($httpProvider) {
-        $httpProvider.interceptors.push("oauthInterceptor");
-    }
-    oauthConfig.$inject = [ "$httpProvider" ];
     var _createClass = function() {
         function defineProperties(target, props) {
             for (var i = 0; i < props.length; i++) {
@@ -119,7 +119,8 @@
                         var response;
                         data = angular.extend({
                             client_id: config.clientId,
-                            grant_type: "password"
+                            redirect_uri: config.redirect_uri,
+                            grant_type: "authorization_code"
                         }, data);
                         if (null !== config.clientSecret) {
                             data.client_secret = config.clientSecret;
