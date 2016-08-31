@@ -18,6 +18,31 @@
         $httpProvider.interceptors.push("oauthInterceptor");
     }
     oauthConfig.$inject = [ "$httpProvider" ];
+    function oauthInterceptor($q, $rootScope, OAuthToken) {
+        return {
+            request: function request(config) {
+                config.headers = config.headers || {};
+                return OAuthToken.getAuthorizationHeader().then(function(header) {
+                    if (!config.headers.hasOwnProperty("Authorization") && !!header) {
+                        config.headers.Authorization = header;
+                    }
+                    return config;
+                });
+            },
+            responseError: function responseError(rejection) {
+                if (400 === rejection.status && rejection.data && ("invalid_request" === rejection.data.error || "invalid_grant" === rejection.data.error)) {
+                    OAuthToken.removeToken().then(function() {
+                        $rootScope.$emit("oauth:error", rejection);
+                    });
+                }
+                if (401 === rejection.status && rejection.data && "invalid_token" === rejection.data.error || rejection.headers("www-authenticate") && 0 === rejection.headers("www-authenticate").indexOf("Bearer")) {
+                    $rootScope.$emit("oauth:error", rejection);
+                }
+                return $q.reject(rejection);
+            }
+        };
+    }
+    oauthInterceptor.$inject = [ "$q", "$rootScope", "OAuthToken" ];
     var _createClass = function() {
         function defineProperties(target, props) {
             for (var i = 0; i < props.length; i++) {
@@ -281,30 +306,5 @@
         };
         this.$get.$inject = [ "$localForage" ];
     }
-    function oauthInterceptor($q, $rootScope, OAuthToken) {
-        return {
-            request: function request(config) {
-                config.headers = config.headers || {};
-                return OAuthToken.getAuthorizationHeader().then(function(header) {
-                    if (!config.headers.hasOwnProperty("Authorization") && !!header) {
-                        config.headers.Authorization = header;
-                    }
-                    return config;
-                });
-            },
-            responseError: function responseError(rejection) {
-                if (400 === rejection.status && rejection.data && ("invalid_request" === rejection.data.error || "invalid_grant" === rejection.data.error)) {
-                    OAuthToken.removeToken().then(function() {
-                        $rootScope.$emit("oauth:error", rejection);
-                    });
-                }
-                if (401 === rejection.status && rejection.data && "invalid_token" === rejection.data.error || rejection.headers("www-authenticate") && 0 === rejection.headers("www-authenticate").indexOf("Bearer")) {
-                    $rootScope.$emit("oauth:error", rejection);
-                }
-                return $q.reject(rejection);
-            }
-        };
-    }
-    oauthInterceptor.$inject = [ "$q", "$rootScope", "OAuthToken" ];
     return ngModule;
 });
